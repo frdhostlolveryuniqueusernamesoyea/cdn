@@ -23,19 +23,18 @@
 
     // Funkce pro upload souboru
     document.getElementById('uploadBtn').addEventListener('click', async () => {
+      const file = new Blob(['Hello Supabase!']);
       const { data, error } = await supabaseClient
-        .from('public')
-        .upload('example.txt', new Blob(['Hello Supabase!']), {
-          cacheControl: '3600',
-          upsert: false
-        });
+        .storage
+        .from('public')  // správný název bucketu
+        .upload('example.txt', file, { upsert: false });
 
       if (error) {
-        document.getElementById('uploadBtn').innerText = 'Chyba při uploadu:', error.message;
+        console.error('Chyba při uploadu:', error.message);
       } else {
-        document.getElementById('uploadBtn').innerText = 'Soubor nahrán:' + data;
+        console.log('Soubor nahrán:', data);
       }
-    });
+  });
   </script>
 </body>
 </html>
