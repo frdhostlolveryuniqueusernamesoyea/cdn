@@ -10,7 +10,7 @@
 <body>
   <h1>Supabase CDN Example</h1>
 
-  <button id="uploadBtn">Nahrát soubor</button>
+  <button id="uploadBtn">Nahrát soubor [neni select]</button>
 
   <script>
     // Po načtení knihovny, používáme Supabase
@@ -25,16 +25,16 @@
     document.getElementById('uploadBtn').addEventListener('click', async () => {
       const { data, error } = await supabaseClient
         .storage
-        .from('your-bucket')
+        .from('public')
         .upload('example.txt', new Blob(['Hello Supabase!']), {
           cacheControl: '3600',
           upsert: false
         });
 
       if (error) {
-        console.error('Chyba při uploadu:', error.message);
+        document.getElementById('uploadBtn').innerText = 'Chyba při uploadu:', error.message;
       } else {
-        console.log('Soubor nahrán:', data);
+        document.getElementById('uploadBtn').innerText = 'Soubor nahrán:' + data;
       }
     });
   </script>
