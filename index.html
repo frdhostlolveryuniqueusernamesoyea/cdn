@@ -24,7 +24,6 @@
     // Funkce pro upload souboru
     document.getElementById('uploadBtn').addEventListener('click', async () => {
       const { data, error } = await supabaseClient
-        .storage
         .from('public')
         .upload('example.txt', new Blob(['Hello Supabase!']), {
           cacheControl: '3600',
